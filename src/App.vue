@@ -1,8 +1,8 @@
 <template>
   <v-app toolbar>
-    <NavigationDrawer :drawer="drawer"></NavigationDrawer>
+    <NavigationDrawer></NavigationDrawer>
     <v-toolbar fixed class="deep-orange" dark>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="showHideDrawer"></v-toolbar-side-icon>
       <v-toolbar-title>Toolbar</v-toolbar-title>
     </v-toolbar>
     <main>
@@ -15,16 +15,27 @@
 </template>
 
 <script>
+import store from './store'
+// import {OPEN_DRAWER} from './store/layout'
 import NavigationDrawer from './components/NavigationDrawer/NavigationDrawer'
 
 export default {
   name: 'app',
+  store,
   components: {
     NavigationDrawer
   },
-  data () {
-    return {
-      drawer: null
+  methods: {
+    showHideDrawer: () => {
+      if (store.getters.getDrawer) {
+        console.log('app CLOSE_DRAWER')
+        store.commit('CLOSE_DRAWER', {})
+      } else {
+        console.log('app OPEN_DRAWER')
+        store.commit('OPEN_DRAWER', {})
+      }
+
+      // console.log('drawer', store.getters.abc)
     }
   }
 }

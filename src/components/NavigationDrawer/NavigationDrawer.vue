@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     temporary
-    v-model="drawerVisible"
+    v-model="drawer"
     light
     overflow
     absolute
@@ -32,26 +32,27 @@
 </template>
 
 <script>
+// import {mapState} from 'vuex'
 export default {
-  props: ['drawer'],
   computed: {
-    drawerVisible: {
+    drawer: {
       get () {
-        return this.drawer
+        console.log('get drawer', this.$store.getters.getDrawer)
+        return this.$store.getters.getDrawer
       },
       set (value) {
-        this.darwer = value
+        console.log('value', value, this.$store.getters.getDrawer)
+        if (value !== this.$store.getters.getDrawer) {
+          if (value) {
+            console.log('set drawer', true)
+            this.$store.commit('OPEN_DRAWER')
+          } else {
+            console.log('set drawer', false)
+            this.$store.commit('CLOSE_DRAWER')
+          }
+        }
       }
     }
-  },
-  mounted () {
-    console.log('dupa', this)
-    console.log('xxx', this.drawer)
-
-    setInterval(() => {
-      console.log('sss', this.drawer)
-      console.log('aaa', this.drawerVisible)
-    }, 1000)
   },
   data () {
     return {
