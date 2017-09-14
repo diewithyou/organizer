@@ -5,14 +5,9 @@ import layout from './layout'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state: {
-    dupa: 'abc'
-  },
+  state: {},
   modules: {
     layout
-  },
-  getters: {
-    getDupa: state => state.dupa
   }
 })
 
