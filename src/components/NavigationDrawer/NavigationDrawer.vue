@@ -14,19 +14,31 @@
         <v-list-tile-content>
           <v-list-tile-title>death</v-list-tile-title>
         </v-list-tile-content>
-        </v-list-tile-action>
       </v-list-tile>
     </v-list>
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" :disabled="item.disabled">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+      <v-list-group v-for="item in items" :key="item.title" :value="item.active">
+        <v-list-tile slot="item" :to="item.to">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+          <v-list-tile-action v-show="!item.to">
+            <v-icon>keyboard_arrow_down</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" :to="subItem.to">
+          <v-list-tile-content>
+            <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+          </v-list-tile-content>
+          <v-list-tile-action>
+            <v-icon>{{ subItem.action }}</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -45,6 +57,7 @@
           return this.getDrawer
         },
         set (value) {
+          console.log('val', value)
           if (value !== this.getDrawer) {
             this.$store.commit(value ? OPEN_DRAWER : CLOSE_DRAWER)
           }
@@ -56,9 +69,9 @@
         items: [
           { title: 'Home', icon: 'dashboard', to: 'home' },
           { title: 'Calendar', icon: 'date_range', to: 'calendar' },
-          { title: 'Finances', icon: 'assessment', disabled: true },
-          { title: 'Settings', icon: 'settings', disabled: true },
-          { title: 'My profile', icon: 'person', disabled: true },
+          { title: 'Finances', icon: 'assessment', disabled: true, to: 'finances' },
+          { title: 'Settings', icon: 'settings', disabled: true, items: [{title: 'Add task', to: 'tasks'}, {title: 'Do something', to: 'dosomething'}] },
+          { title: 'My profile', icon: 'person', disabled: true, to: 'profile' },
           { title: 'About', icon: 'question_answer', to: 'about' },
           { title: 'Test', icon: 'toys', to: 'test' }
         ]
