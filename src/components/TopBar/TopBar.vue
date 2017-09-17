@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex'
+  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
 
-export default {
-  computed: {
-    ...mapGetters([
-      'getDrawer'
-    ])
-  },
-  methods: {
-    showHideDrawer () {
-      if (this.getDrawer) {
-        this.$store.commit(CLOSE_DRAWER)
-      } else {
-        this.$store.commit(OPEN_DRAWER)
+  export default {
+    computed: {
+      ...mapGetters([
+        'getDrawer'
+      ])
+    },
+    methods: {
+      showHideDrawer () {
+        if (this.getDrawer) {
+          this.$store.commit(CLOSE_DRAWER)
+        } else {
+          this.$store.commit(OPEN_DRAWER)
+        }
       }
     }
   }
-}
 </script>

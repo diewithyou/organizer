@@ -1,3 +1,3 @@
 <template>
-  <div>to jest about</div>
+  <div>About organizer</div>
 </template>

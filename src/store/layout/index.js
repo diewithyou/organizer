@@ -2,7 +2,7 @@ import mutations from './mutations'
 
 export default {
   state: {
-    drawer: null
+    drawer: false
   },
   mutations,
   getters: {

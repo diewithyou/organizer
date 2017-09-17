@@ -19,7 +19,7 @@
     </v-list>
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
-      <v-list-tile v-for="item in items" :key="item.title" :to="item.href" :disabled="item.disabled">
+      <v-list-tile v-for="item in items" :key="item.title" :to="item.to" :disabled="item.disabled">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -32,35 +32,37 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex'
+  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
 
-export default {
-  computed: {
-    ...mapGetters([
-      'getDrawer'
-    ]),
-    drawer: {
-      get () {
-        return this.getDrawer
-      },
-      set (value) {
-        if (value !== this.getDrawer) {
-          this.$store.commit(value ? OPEN_DRAWER : CLOSE_DRAWER)
+  export default {
+    computed: {
+      ...mapGetters([
+        'getDrawer'
+      ]),
+      drawer: {
+        get () {
+          return this.getDrawer
+        },
+        set (value) {
+          if (value !== this.getDrawer) {
+            this.$store.commit(value ? OPEN_DRAWER : CLOSE_DRAWER)
+          }
         }
       }
-    }
-  },
-  data () {
-    return {
-      items: [
-        { title: 'Home', icon: 'dashboard', href: 'home' },
-        { title: 'Calendar', icon: 'date_range', disabled: true },
-        { title: 'Settings', icon: 'settings', disabled: true },
-        { title: 'My profile', icon: 'person', disabled: true },
-        { title: 'About', icon: 'question_answer', href: 'about' }
-      ]
+    },
+    data () {
+      return {
+        items: [
+          { title: 'Home', icon: 'dashboard', to: 'home' },
+          { title: 'Calendar', icon: 'date_range', to: 'calendar' },
+          { title: 'Finances', icon: 'assessment', disabled: true },
+          { title: 'Settings', icon: 'settings', disabled: true },
+          { title: 'My profile', icon: 'person', disabled: true },
+          { title: 'About', icon: 'question_answer', to: 'about' },
+          { title: 'Test', icon: 'toys', to: 'test' }
+        ]
+      }
     }
   }
-}
 </script>

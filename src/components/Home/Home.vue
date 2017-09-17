@@ -12,3 +12,9 @@
     </v-container>
   </v-card>
 </template>
+
+<script>
+  export default {
+    name: 'Home'
+  }
+</script>
