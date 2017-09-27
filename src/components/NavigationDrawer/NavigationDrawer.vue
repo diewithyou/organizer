@@ -70,7 +70,7 @@
           { title: 'Home', icon: 'dashboard', to: 'home' },
           { title: 'Calendar', icon: 'date_range', to: 'calendar' },
           { title: 'Finances', icon: 'assessment', disabled: true, to: 'finances' },
-          { title: 'Settings', icon: 'settings', disabled: true, items: [{title: 'Add task', to: 'tasks'}, {title: 'Do something', to: 'dosomething'}] },
+          { title: 'Settings', icon: 'settings', disabled: true, items: [{title: 'Add task', to: 'typeoftasks'}, {title: 'Do something', to: 'dosomething'}] },
           { title: 'My profile', icon: 'person', disabled: true, to: 'profile' },
           { title: 'About', icon: 'question_answer', to: 'about' },
           { title: 'Test', icon: 'toys', to: 'test' }
