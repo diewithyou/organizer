@@ -1,12 +1,12 @@
 <template>
   <v-dialog v-model="dialog" scrollable>
-    <v-btn primary dark slot="activator">Open Dialog</v-btn>
+    <!--<v-btn primary dark slot="activator">Open Dialog</v-btn>-->
     <v-card>
       <v-card-title>
         <span class="headline">{{title}}</span>
       </v-card-title>
       <v-divider></v-divider>
-      <v-card-text style="height: 300px;">
+      <v-card-text>
         <slot name="body"></slot>
       </v-card-text>
       <v-divider></v-divider>

@@ -1,6 +1,7 @@
 <template>
   <v-flex xs12 sm6 offset-sm3>
     <AddTypeOfTaskModal></AddTypeOfTaskModal>
+    <v-btn class="blue--text darken-1" flat @mousedown.native="show">Add type of task</v-btn>
     <v-data-table
       v-bind:headers="headers"
       :items="getTypeOfTasks"
@@ -18,6 +19,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import {OPEN_DIALOG} from '../../store/mutation-types'
   import AddTypeOfTaskModal from './AddTypeOfTaskModal'
 
   export default {
@@ -48,6 +50,9 @@
       }
     },
     methods: {
+      show () {
+        this.$store.commit(OPEN_DIALOG)
+      }
     }
   }
 </script>

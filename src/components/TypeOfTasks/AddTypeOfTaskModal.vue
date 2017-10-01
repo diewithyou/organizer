@@ -17,7 +17,7 @@
     <v-card-actions slot="v-card-actions">
       <v-spacer></v-spacer>
       <v-btn class="blue--text darken-1" flat @click.native="hideDialog">Close</v-btn>
-      <v-btn class="blue--text darken-1" flat @click.native="addTask">Save</v-btn>
+      <v-btn class="blue--text darken-1" flat @click.native="addTypeOfTask">Add</v-btn>
     </v-card-actions>
   </Modal>
 </template>
@@ -39,7 +39,7 @@
       }
     },
     methods: {
-      addTask () {
+      addTypeOfTask () {
         this.$store.commit(ADD_TYPE_OF_TASK, {name: this.name, time: parseInt(this.time), price: parseFloat(this.price)})
         this.clearForm()
         this.hideDialog()
