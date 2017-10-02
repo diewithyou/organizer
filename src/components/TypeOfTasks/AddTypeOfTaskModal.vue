@@ -40,7 +40,11 @@
     },
     methods: {
       addTypeOfTask () {
-        this.$store.commit(ADD_TYPE_OF_TASK, {name: this.name, time: parseInt(this.time), price: parseFloat(this.price)})
+        this.$store.commit(ADD_TYPE_OF_TASK, {
+          name: this.name,
+          time: parseInt(this.time),
+          price: parseFloat(this.price)
+        })
         this.clearForm()
         this.hideDialog()
       },

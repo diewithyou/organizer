@@ -8,7 +8,7 @@
 
 <script>
   import jQuery from 'jquery'
-  import {OPEN_DIALOG} from '../../store/mutation-types'
+  import {OPEN_DIALOG, CREATE_NEW_TASK} from '../../store/mutation-types'
   import {fullcalendar} from 'fullcalendar'
   import AddTaskModal from './AddTaskModal'
 
@@ -48,7 +48,7 @@
         },
         dayClick: function (date, jsEvent, view) {
           console.log('jsEvent', jsEvent)
-          console.log('Clicked on:', date.format(), date)
+          console.log('Clicked on:', date.format(), date, date.toISOString(), date.format('HH:mm:ss'))
           console.log('Coordinates:', jsEvent.pageX, jsEvent.pageY)
           console.log('Current view:', view)
           console.log('this', this)
@@ -57,6 +57,11 @@
 
           console.log('ppp', cal.fullCalendar('clientEvents'))
 
+          this.$store.commit(CREATE_NEW_TASK, {
+            start: date.format()
+          })
+
+          // to do zmiany w pozniejszym terminie
           setTimeout(function () {
             this.$store.commit(OPEN_DIALOG)
           }.bind(this), 1)

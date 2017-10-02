@@ -31,11 +31,15 @@
     },
     computed: {
       ...mapGetters([
-        'getTypeOfTasks'
+        'getTypeOfTasks',
+        'getNewTask'
       ]),
       typeOfTasks () {
         return Object.entries(this.getTypeOfTasks).map(p => p[0])
       }
+    },
+    mounted () {
+      console.log('getNewTask', this.getNewTask)
     },
     data () {
       return {
