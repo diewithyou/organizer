@@ -4,7 +4,7 @@
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Add type of task</v-btn>
     <v-data-table
       v-bind:headers="headers"
-      :items="typeOfTasks"
+      :items="getTypeOfTasks"
       hide-actions
       class="elevation-1"
     >
@@ -29,13 +29,7 @@
     computed: {
       ...mapGetters([
         'getTypeOfTasks'
-      ]),
-      typeOfTasks () {
-        return Object.entries(this.getTypeOfTasks).map(p => p[1])
-      }
-    },
-    mounted () {
-      console.log('getTypeOfTasks', this.getTypeOfTasks)
+      ])
     },
     data () {
       return {

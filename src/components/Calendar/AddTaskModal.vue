@@ -4,7 +4,7 @@
       <div>dupeczka</div>
       <v-select
         label="Select"
-        v-bind:items="typeOfTasks"
+        v-bind:items="typeOfTask"
         v-model="e7"
         multiple
         chips
@@ -34,8 +34,8 @@
         'getTypeOfTasks',
         'getNewTask'
       ]),
-      typeOfTasks () {
-        return Object.entries(this.getTypeOfTasks).map(p => p[0])
+      typeOfTask () {
+        return this.getTypeOfTasks.map(p => p.name)
       }
     },
     mounted () {
