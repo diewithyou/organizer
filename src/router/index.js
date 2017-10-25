@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home/Home'
 import Calendar from '@/components/Calendar/Calendar'
+import Finances from '@/components/Finances/Finances'
 import TypeOfTasks from '@/components/TypeOfTasks/TypeOfTasks'
 import About from '@/components/About/About'
 import NotFound from '@/components/NotFound/NotFound'
@@ -26,6 +27,11 @@ export default new Router({
       path: '/calendar',
       name: 'Calendar',
       component: Calendar
+    },
+    {
+      path: '/finances',
+      name: 'Finances',
+      component: Finances
     },
     {
       path: '/typeoftasks',
