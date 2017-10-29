@@ -8,6 +8,6 @@ export default {
 
   [types.ADD_NEW_TASK] (state, payload) {
     console.log('ADD_NEW_TASK')
-    state.tasks.push(state.newTask)
+    state.tasks.push(payload)
   }
 }

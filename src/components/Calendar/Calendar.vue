@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="calendar"></div>
-    <AddTaskModal v-on:abcdef="abcdefg"></AddTaskModal>
+    <AddTaskModal v-on:addNewTask="addNewTask"></AddTaskModal>
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Dupka</v-btn>
   </div>
 </template>
 
 <script>
   import jQuery from 'jquery'
-  import {OPEN_DIALOG, CREATE_NEW_TASK} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex'
+  import {ADD_NEW_TASK, OPEN_DIALOG, CREATE_NEW_TASK} from '../../store/mutation-types'
   import {fullcalendar} from 'fullcalendar'
   import AddTaskModal from './AddTaskModal'
 
@@ -17,29 +18,20 @@
       fullcalendar,
       AddTaskModal
     },
+    computed: {
+      ...mapGetters([
+        'getTasks'
+      ])
+    },
     mounted () {
       console.log('bind', this)
-      const cal = jQuery('.calendar').fullCalendar({
+      this.cal = jQuery('.calendar').fullCalendar({
         header: {
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
         },
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2017-09-30T19:00:00'
-          },
-          {
-            title: 'Long Event',
-            start: '2017-09-30T08:35:00'
-          },
-          {
-            id: 999,
-            title: 'Repeating Event',
-            start: '2017-09-30T16:00:00'
-          }
-        ],
+        events: this.getTasks,
         editable: true,
         eventClick: (calEvent, jsEvent, view) => {
           console.log('Event: ' + calEvent.title)
@@ -53,9 +45,9 @@
           console.log('Current view:', view)
           console.log('this', this)
 
-          cal.fullCalendar('renderEvent', {title: 'title', start: date}, true)
+//          cal.fullCalendar('renderEvent', {title: 'title', start: date}, true)
 
-          console.log('ppp', cal.fullCalendar('clientEvents'))
+          console.log('ppp', this.cal.fullCalendar('clientEvents'))
 
           this.$store.commit(CREATE_NEW_TASK, {
             start: date.format()
@@ -72,8 +64,9 @@
       show () {
         this.$store.commit(OPEN_DIALOG)
       },
-      abcdefg (abc) {
-        console.log('abcdefg', abc)
+      addNewTask (newTask) {
+        this.$store.commit(ADD_NEW_TASK, newTask)
+        this.cal.fullCalendar('renderEvent', newTask)
       }
     }
   }

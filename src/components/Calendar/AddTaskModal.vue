@@ -44,21 +44,17 @@
     data () {
       return {
         valid: false,
-        e7: [],
-        states: {abc: [
-          'abcd',
-          'bcde',
-          'cdef'
-        ]}
+        e7: []
       }
     },
     methods: {
       addTask () {
-        console.log('dodaje')
         const newTask = {
-          'abc': 'abc'
+          title: 'New Task',
+          start: this.getNewTask.start
         }
-        this.$emit('abcdef', newTask)
+        this.$emit('addNewTask', newTask)
+        this.closeDialog()
       },
       closeDialog () {
         this.$store.commit(CLOSE_DIALOG)
