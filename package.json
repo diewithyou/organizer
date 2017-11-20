@@ -16,6 +16,8 @@
   "dependencies": {
     "fullcalendar": "^3.5.1",
     "jquery": "^3.2.1",
+    "moment": "^2.19.2",
+    "underscore": "^1.8.3",
     "vue": "^2.4.4",
     "vue-router": "^2.7.0",
     "vuetify": "^0.15.3",
