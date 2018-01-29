@@ -5,7 +5,7 @@
       <v-select
         label="Select"
         v-bind:items="typeOfTask"
-        v-model="e7"
+        v-model="types"
         multiple
         chips
         hint="What are the target regions"
