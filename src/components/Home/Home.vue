@@ -5,7 +5,7 @@
         <v-flex xs7>
           <div>
             <div class="headline">Hello</div>
-            <div>This is begining of great project.</div>
+            <div>This is begining of great project for firma kosmetyczna.</div>
           </div>
         </v-flex>
       </v-layout>
