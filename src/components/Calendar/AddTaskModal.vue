@@ -1,14 +1,14 @@
 <template>
   <Modal title="Add Task">
     <v-form v-model="valid" slot="body">
-      <div>dupeczka</div>
+      <v-text-field v-model="title"></v-text-field>
       <v-select
         label="Select"
         v-bind:items="typeOfTask"
         v-model="types"
         multiple
         chips
-        hint="What are the target regions"
+        hint="Zaznacz opcje"
         persistent-hint
       ></v-select>
     </v-form>
@@ -47,13 +47,14 @@
     data () {
       return {
         valid: false,
-        types: []
+        types: [],
+        title: 'New task',
       };
     },
     methods: {
       addTask () {
         const newTask = {
-          title: 'New Task',
+          title: this.title,
           start: this.getNewTask.start,
           categoryId: this.types
         };

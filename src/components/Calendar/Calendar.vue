@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="calendar"></div>
-    <AddTaskModal v-on:addNewTask="addNewTask"></AddTaskModal>
+    <AddTaskModal @addNewTask="addNewTask" :taskId="taskId"></AddTaskModal>
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Dupka</v-btn>
     <full-calendar
       :editable="true"
@@ -22,6 +22,11 @@
   import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK, CREATE_NEW_TASK} from '../../store/mutation-types';
 
   export default {
+    data () {
+      return {
+        taskId: null
+      }
+    },
     components: {
       FullCalendar,
       AddTaskModal
