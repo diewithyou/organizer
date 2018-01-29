@@ -69,6 +69,7 @@
         items: [
           { title: 'Home', icon: 'dashboard', to: 'home' },
           { title: 'Calendar', icon: 'date_range', to: 'calendar' },
+          { title: 'Available time', icon: 'date_range', to: 'calendaravailabletime' },
           { title: 'Finances', icon: 'assessment', disabled: true, to: 'finances' },
           { title: 'Settings', icon: 'settings', disabled: true, items: [{title: 'Add task', to: 'typeoftasks'}, {title: 'Do something', to: 'dosomething'}] },
           { title: 'My profile', icon: 'person', disabled: true, to: 'profile' },

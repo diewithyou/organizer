@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/Home/Home';
 import Calendar from '@/components/Calendar/Calendar';
+import CalendarAvailableTime from '@/components/CalendarAvailableTime/CalendarAvailableTime';
 import Finances from '@/components/Finances/Finances';
 import TypeOfTasks from '@/components/TypeOfTasks/TypeOfTasks';
 import About from '@/components/About/About';
@@ -27,6 +28,11 @@ export default new Router({
       path: '/calendar',
       name: 'Calendar',
       component: Calendar
+    },
+    {
+      path: '/calendaravailabletime',
+      name: 'CalendarAvailableTime',
+      component: CalendarAvailableTime
     },
     {
       path: '/finances',
