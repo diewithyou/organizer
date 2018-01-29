@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import layout from './layout'
-import typeoftasks from './typeoftasks'
-import tasks from './tasks'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import layout from './layout';
+import typeoftasks from './typeoftasks';
+import tasks from './tasks';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {},
@@ -13,6 +13,6 @@ const store = new Vuex.Store({
     typeoftasks,
     tasks
   }
-})
+});
 
-export default store
+export default store;

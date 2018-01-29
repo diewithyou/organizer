@@ -1,4 +1,4 @@
-import mutations from './mutations'
+import mutations from './mutations';
 
 export default {
   state: {
@@ -10,4 +10,4 @@ export default {
     getDrawer: state => state.drawer,
     getDialog: state => state.dialog
   }
-}
+};

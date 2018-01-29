@@ -1,4 +1,4 @@
-import mutations from './mutations'
+import mutations from './mutations';
 
 export default {
   state: [
@@ -17,4 +17,4 @@ export default {
   getters: {
     getTypeOfTasks: state => state
   }
-}
+};

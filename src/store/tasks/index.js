@@ -1,4 +1,4 @@
-import mutations from './mutations'
+import mutations from './mutations';
 
 export default {
   state: {
@@ -27,4 +27,4 @@ export default {
     getNewTask: state => state.newTask,
     getTasks: state => state.tasks
   }
-}
+};

@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/components/Home/Home'
-import Calendar from '@/components/Calendar/Calendar'
-import Finances from '@/components/Finances/Finances'
-import TypeOfTasks from '@/components/TypeOfTasks/TypeOfTasks'
-import About from '@/components/About/About'
-import NotFound from '@/components/NotFound/NotFound'
-import Test from '@/components/Test/Test'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/components/Home/Home';
+import Calendar from '@/components/Calendar/Calendar';
+import Finances from '@/components/Finances/Finances';
+import TypeOfTasks from '@/components/TypeOfTasks/TypeOfTasks';
+import About from '@/components/About/About';
+import NotFound from '@/components/NotFound/NotFound';
+import Test from '@/components/Test/Test';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -54,4 +54,4 @@ export default new Router({
       component: NotFound
     }
   ]
-})
+});
