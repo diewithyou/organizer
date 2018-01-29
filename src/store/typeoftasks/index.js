@@ -5,12 +5,14 @@ export default {
     {
       name: 'Makijaż',
       time: 60,
-      price: 75.99
+      price: 75.99,
+      id: 1
     },
     {
       name: 'Rzęsy',
       time: 120,
-      price: 70
+      price: 70,
+      id: 2
     }
   ],
   mutations,
