@@ -8,3 +8,4 @@ export const ADD_TYPE_OF_TASK = 'ADD_TYPE_OF_TASK';
 
 export const CREATE_NEW_TASK = 'CREATE_NEW_TASK';
 export const ADD_NEW_TASK = 'ADD_TASK';
+export const UPDATE_TASK = 'UPDATE_TASK';

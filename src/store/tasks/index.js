@@ -46,6 +46,7 @@ export default {
         price: 30.3
       }
     ],
+    nextId: 1,
     newTask: {}
   },
   mutations,

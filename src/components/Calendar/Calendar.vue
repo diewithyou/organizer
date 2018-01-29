@@ -5,10 +5,10 @@
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Dupka</v-btn>
     <full-calendar
       :editable="true"
-      day-click="dayClick"
-      @event-created="eventCreated"
+      @event-created="onEventCreated"
+      @event-drop="onEventDrop"
       :events="getTasks"
-    > </full-calendar>
+    ></full-calendar>
   </div>
 </template>
 
@@ -19,7 +19,7 @@
   // import {fullcalendar} from 'fullcalendar';
   import {FullCalendar} from 'vue-full-calendar';
   import AddTaskModal from './AddTaskModal';
-  import {OPEN_DIALOG, ADD_NEW_TASK} from '../../store/mutation-types';
+  import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK} from '../../store/mutation-types';
 
   export default {
     components: {
@@ -41,7 +41,7 @@
         this.$store.commit(ADD_NEW_TASK, newTask);
         this.cal.fullCalendar('renderEvent', newTask);
       },
-      eventCreated (event) {
+      onEventCreated (event) {
         // this.$store.commit(OPEN_DIALOG);
         // setTimeout(() => {
         //   this.$store.commit(OPEN_DIALOG);
@@ -51,12 +51,15 @@
           end: event.end.format()
         });
       },
-      dayClick (date, jsEvent, view) {
-          // to do zmiany w pozniejszym terminie
-        setTimeout(() => {
-          this.$store.commit(OPEN_DIALOG);
-        }, 1);
-        // }.bind(this)
+
+      onEventDrop (event) {
+        // console.log('oneventdrop', event);
+        this.$store.commit(UPDATE_TASK, {
+          start: event.start.format(),
+          end: event.end.format(),
+          id: event.id,
+          title: event.title
+        });
       }
     }
   };

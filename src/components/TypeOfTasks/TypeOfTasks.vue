@@ -8,7 +8,7 @@
       hide-actions
       class="elevation-1"
     >
-      <template slot="items" scope="props">
+      <template slot="items" slot-scope="props">
         <td class="text-xs-right">{{ props.item.name }}</td>
         <td class="text-xs-right">{{ props.item.time }}</td>
         <td class="text-xs-right">{{ props.item.price.toFixed(2) }}</td>
