@@ -51,7 +51,9 @@
     },
     methods: {
       show () {
-        this.$store.commit(OPEN_DIALOG);
+        setTimeout(function () {
+          this.$store.commit(OPEN_DIALOG);
+        }.bind(this));
       }
     }
   };
