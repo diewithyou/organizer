@@ -1,21 +1,22 @@
 <template>
   <v-flex xs12 sm6 offset-sm3>
     <div v-for="year in statistic">
-      {{year.year}}
+      <h5>{{year.year}}</h5>
+
       <v-expansion-panel expand>
         <v-expansion-panel-content v-for="(month, i) in year.months" :key="i">
-          <div slot="header">{{month.monthTranslated}} - <strong>{{month.tasks.length}}</strong></div>
+          <div slot="header">{{month.monthTranslated}} -
+            <strong>{{month.tasks.length}}</strong>
+          </div>
           <v-card>
             <v-card-text class="grey lighten-3">
-              <v-data-table
-                  v-bind:headers="tasksHeaders"
-                  :items="month.tasks"
-                  hide-actions
-                  class="elevation-1"
-                >
+              <v-data-table v-bind:headers="tasksHeaders" :items="month.accumulatedTasks" hide-actions class="elevation-1">
                 <template slot="items" slot-scope="props">
-                  <td>{{ props.item.title }}</td>
-                  <td class="text-xs-right">{{ props.item.price }}</td>
+                  <tr  v-if="props.item.count">
+                    <td>{{ props.item.name }}</td>
+                    <td class="text-xs-right">{{ props.item.count }}</td>
+                    <td class="text-xs-right">{{ props.item.income }}</td>
+                  </tr>
                 </template>
               </v-data-table>
             </v-card-text>
@@ -27,64 +28,107 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
-  import moment from 'moment';
-  import _ from 'underscore';
+import { mapGetters } from 'vuex';
+import moment from 'moment';
+import _ from 'underscore';
 
-  export default {
-    computed: {
-      ...mapGetters([
-        'getTasks'
-      ]),
-      statistic () {
-        let data = [{
-          year: 2017,
-          months: []
-        }, {
-          year: 2018,
-          months: []
-        }];
-
-        _.each(data, function (item) {
-          for (let i = 1; i <= 12; i++) {
-            item.months.push({
-              month: i,
-              monthTranslated: moment().month(i - 1).format('MMMM'),
-              tasks: []
-            });
-          }
+export default {
+  methods:{
+    getEmptyCategories: function() {
+      var emptyCategories = _.map(this.getTypeOfTasks, function(task) {
+        return {
+            categoryId: task.id,
+            name: task.name,
+            income: 0,
+            count: 0
+          };
         });
 
-        _.each(this.getTasks, function (item) {
-          let year = parseInt(moment(item.start).format('YYYY'));
-          let month = parseInt(moment(item.start).format('M'));
-          let yearObj = _.findWhere(data, {year: year});
-          let monthObj = _.findWhere(yearObj.months, {month: month});
-          // console.log('year', year, 'month', month, item, yearObj, monthObj);
-          monthObj.tasks.push(item);
-          // TODO: accumulated tasks []
-        });
+      emptyCategories.push({
+        categoryId: 'other',
+        name: 'Pozostałe',
+        income: 0,
+        count: 0
+      });
 
-        return data;
-      }
-    },
-    mounted () {
-      console.log('statistic', this.statistic);
-    },
-    data () {
-      return {
-        tasksHeaders: [
-          {
-            text: 'Title',
-            align: 'left',
-            sortable: false
-          },
-          {
-            text: 'Income',
-            sortable: false
-          }
-        ]
-      };
+      return emptyCategories;
     }
-  };
+  },
+  computed: {
+    ...mapGetters([
+      'getTasks',
+      'getTypeOfTasks'
+    ]),
+    statistic() {
+      let data = [{
+        year: 2017,
+        months: []
+      }, {
+        year: 2018,
+        months: []
+      }];
+
+      _.each(data, item => {
+        for (let i = 1; i <= 12; i++) {
+          item.months.push({
+            month: i,
+            monthTranslated: moment().month(i - 1).format('MMMM'),
+            tasks: [],
+            accumulatedTasks: this.getEmptyCategories()
+          });
+        }
+      });
+
+      _.each(this.getTasks, function(item) {
+        let year = parseInt(moment(item.start).format('YYYY'));
+        let month = parseInt(moment(item.start).format('M'));
+        let yearObj = _.findWhere(data, { year: year });
+        let monthObj = _.findWhere(yearObj.months, { month: month });
+
+        monthObj.tasks.push(item);
+      });
+
+      _.each(data, function(year) {
+        _.each(year.months, function(month) {
+          var accumulatedTasks = month.accumulatedTasks;
+          _.each(month.tasks, function(task) {
+            let taskCategories = task.categoryId;
+
+            if(taskCategories.length === 1) {
+              _.findWhere(accumulatedTasks, {categoryId: taskCategories[0]}).income += task.price;
+              _.findWhere(accumulatedTasks, {categoryId: taskCategories[0]}).count++;
+            } else {
+              _.findWhere(accumulatedTasks, {categoryId: 'other'}).income += task.price;
+              _.findWhere(accumulatedTasks, {categoryId: 'other'}).count++;
+            }
+          });
+        });
+      });
+
+      return data;
+    }
+  },
+  mounted() {
+    console.log('statistic', this.statistic);
+  },
+  data() {
+    return {
+      tasksHeaders: [
+        {
+          text: 'Title',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Count',
+          sortable: false
+        },
+        {
+          text: 'Income',
+          sortable: false
+        }
+      ]
+    };
+  }
+};
 </script>
