@@ -35,7 +35,10 @@
         'getNewTask'
       ]),
       typeOfTask () {
-        return this.getTypeOfTasks.map(p => p.name);
+        return this.getTypeOfTasks.map(p => ({
+          text: p.name,
+          value: p.id
+        }));
       }
     },
     mounted () {
@@ -44,14 +47,15 @@
     data () {
       return {
         valid: false,
-        e7: []
+        types: []
       };
     },
     methods: {
       addTask () {
         const newTask = {
           title: 'New Task',
-          start: this.getNewTask.start
+          start: this.getNewTask.start,
+          categoryId: this.types
         };
         this.$emit('addNewTask', newTask);
         this.closeDialog();

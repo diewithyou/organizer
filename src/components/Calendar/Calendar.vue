@@ -19,7 +19,7 @@
   // import {fullcalendar} from 'fullcalendar';
   import {FullCalendar} from 'vue-full-calendar';
   import AddTaskModal from './AddTaskModal';
-  import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK} from '../../store/mutation-types';
+  import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK, CREATE_NEW_TASK} from '../../store/mutation-types';
 
   export default {
     components: {
@@ -39,17 +39,18 @@
       },
       addNewTask (newTask) {
         this.$store.commit(ADD_NEW_TASK, newTask);
-        this.cal.fullCalendar('renderEvent', newTask);
+        // this.cal.fullCalendar('renderEvent', newTask);
       },
       onEventCreated (event) {
         // this.$store.commit(OPEN_DIALOG);
-        // setTimeout(() => {
-        //   this.$store.commit(OPEN_DIALOG);
-        // }, 1);
-        this.$store.commit(ADD_NEW_TASK, {
-          start: event.start.format(),
-          end: event.end.format()
-        });
+        //   start: event.start.format(),
+        //   end: event.end.format()
+        // });
+        this.$store.commit(CREATE_NEW_TASK, {start: event.start.format()});
+        // this.$store.commit(OPEN_DIALOG);
+        setTimeout(() => {
+          this.$store.commit(OPEN_DIALOG);
+        }, 1);
       },
 
       onEventDrop (event) {
