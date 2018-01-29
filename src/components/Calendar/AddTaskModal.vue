@@ -21,9 +21,9 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {CLOSE_DIALOG} from '../../store/mutation-types'
-  import Modal from '../Modal/Modal'
+  import {mapGetters} from 'vuex';
+  import {CLOSE_DIALOG} from '../../store/mutation-types';
+  import Modal from '../Modal/Modal';
 
   export default {
     components: {
@@ -35,30 +35,30 @@
         'getNewTask'
       ]),
       typeOfTask () {
-        return this.getTypeOfTasks.map(p => p.name)
+        return this.getTypeOfTasks.map(p => p.name);
       }
     },
     mounted () {
-      console.log('getNewTask', this.getNewTask)
+      console.log('getNewTask', this.getNewTask);
     },
     data () {
       return {
         valid: false,
         e7: []
-      }
+      };
     },
     methods: {
       addTask () {
         const newTask = {
           title: 'New Task',
           start: this.getNewTask.start
-        }
-        this.$emit('addNewTask', newTask)
-        this.closeDialog()
+        };
+        this.$emit('addNewTask', newTask);
+        this.closeDialog();
       },
       closeDialog () {
-        this.$store.commit(CLOSE_DIALOG)
+        this.$store.commit(CLOSE_DIALOG);
       }
     }
-  }
+  };
 </script>

@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  import store from './store'
-  import NavigationDrawer from './components/NavigationDrawer/NavigationDrawer'
-  import TopBar from './components/TopBar/TopBar'
+  import store from './store';
+  import NavigationDrawer from './components/NavigationDrawer/NavigationDrawer';
+  import TopBar from './components/TopBar/TopBar';
 
   export default {
     store,
@@ -21,5 +21,5 @@
       NavigationDrawer,
       TopBar
     }
-  }
+  };
 </script>

@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import {CLOSE_DIALOG, ADD_TYPE_OF_TASK} from '../../store/mutation-types'
-  import Modal from '../Modal/Modal'
+  import {CLOSE_DIALOG, ADD_TYPE_OF_TASK} from '../../store/mutation-types';
+  import Modal from '../Modal/Modal';
 
   export default {
     components: {
@@ -36,7 +36,7 @@
         name: '',
         time: '',
         price: ''
-      }
+      };
     },
     methods: {
       addTypeOfTask () {
@@ -44,18 +44,18 @@
           name: this.name,
           time: parseInt(this.time),
           price: parseFloat(this.price)
-        })
-        this.clearForm()
-        this.hideDialog()
+        });
+        this.clearForm();
+        this.hideDialog();
       },
       hideDialog () {
-        this.$store.commit(CLOSE_DIALOG)
+        this.$store.commit(CLOSE_DIALOG);
       },
       clearForm () {
-        this.name = ''
-        this.time = ''
-        this.price = ''
+        this.name = '';
+        this.time = '';
+        this.price = '';
       }
     }
-  }
+  };
 </script>

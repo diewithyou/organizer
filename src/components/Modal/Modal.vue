@@ -16,8 +16,8 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {OPEN_DIALOG, CLOSE_DIALOG} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex';
+  import {OPEN_DIALOG, CLOSE_DIALOG} from '../../store/mutation-types';
 
   export default {
     props: ['title'],
@@ -27,12 +27,12 @@
       ]),
       dialog: {
         get () {
-          return this.getDialog
+          return this.getDialog;
         },
         set (value) {
-          this.$store.commit(value ? OPEN_DIALOG : CLOSE_DIALOG)
+          this.$store.commit(value ? OPEN_DIALOG : CLOSE_DIALOG);
         }
       }
     }
-  }
+  };
 </script>

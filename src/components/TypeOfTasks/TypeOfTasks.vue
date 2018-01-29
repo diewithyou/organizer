@@ -18,9 +18,9 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {OPEN_DIALOG} from '../../store/mutation-types'
-  import AddTypeOfTaskModal from './AddTypeOfTaskModal'
+  import {mapGetters} from 'vuex';
+  import {OPEN_DIALOG} from '../../store/mutation-types';
+  import AddTypeOfTaskModal from './AddTypeOfTaskModal';
 
   export default {
     components: {
@@ -47,12 +47,12 @@
             value: 'price'
           }
         ]
-      }
+      };
     },
     methods: {
       show () {
-        this.$store.commit(OPEN_DIALOG)
+        this.$store.commit(OPEN_DIALOG);
       }
     }
-  }
+  };
 </script>

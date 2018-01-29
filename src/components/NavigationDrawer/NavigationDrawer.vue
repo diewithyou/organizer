@@ -44,8 +44,8 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex';
+  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types';
 
   export default {
     computed: {
@@ -54,12 +54,12 @@
       ]),
       drawer: {
         get () {
-          return this.getDrawer
+          return this.getDrawer;
         },
         set (value) {
-          console.log('val', value)
+          console.log('val', value);
           if (value !== this.getDrawer) {
-            this.$store.commit(value ? OPEN_DRAWER : CLOSE_DRAWER)
+            this.$store.commit(value ? OPEN_DRAWER : CLOSE_DRAWER);
           }
         }
       }
@@ -75,7 +75,7 @@
           { title: 'About', icon: 'question_answer', to: 'about' },
           { title: 'Test', icon: 'toys', to: 'test' }
         ]
-      }
+      };
     }
-  }
+  };
 </script>

@@ -33,8 +33,8 @@
 </template>
 
 <script>
-  import {OPEN_DIALOG, CLOSE_DIALOG} from '../../store/mutation-types'
-  import Modal from '../Modal/Modal'
+  import {OPEN_DIALOG, CLOSE_DIALOG} from '../../store/mutation-types';
+  import Modal from '../Modal/Modal';
 
   export default {
     components: {
@@ -101,15 +101,15 @@
             ]
           }
         ]
-      }
+      };
     },
     methods: {
       hideDialog () {
-        this.$store.commit(CLOSE_DIALOG)
+        this.$store.commit(CLOSE_DIALOG);
       },
       show () {
-        this.$store.commit(OPEN_DIALOG)
+        this.$store.commit(OPEN_DIALOG);
       }
     }
-  }
+  };
 </script>

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types'
+  import {mapGetters} from 'vuex';
+  import {OPEN_DRAWER, CLOSE_DRAWER} from '../../store/mutation-types';
 
   export default {
     computed: {
@@ -18,11 +18,11 @@
     methods: {
       showHideDrawer () {
         if (this.getDrawer) {
-          this.$store.commit(CLOSE_DRAWER)
+          this.$store.commit(CLOSE_DRAWER);
         } else {
-          this.$store.commit(OPEN_DRAWER)
+          this.$store.commit(OPEN_DRAWER);
         }
       }
     }
-  }
+  };
 </script>

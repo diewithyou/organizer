@@ -16,9 +16,9 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
-  import moment from 'moment'
-  import _ from 'underscore'
+  import {mapGetters} from 'vuex';
+  import moment from 'moment';
+  import _ from 'underscore';
 
   export default {
     computed: {
@@ -26,27 +26,27 @@
         'getTasks'
       ]),
       statistic () {
-        let data = []
+        let data = [];
 
         for (let i = 0; i < 12; i++) {
           data.push({
             month: moment().month(i).format('MMMM'),
             income: 0,
             tasks: 0
-          })
+          });
         }
 
         _.each(this.getTasks, function (item) {
-          let month = parseInt(moment(item.start).format('M'))
-          data[month].income += item.price
-          data[month].tasks++
-        })
+          let month = parseInt(moment(item.start).format('M'));
+          data[month].income += item.price;
+          data[month].tasks++;
+        });
 
-        return data
+        return data;
       }
     },
     mounted () {
-      console.log('statistic', this.statistic)
+      console.log('statistic', this.statistic);
     },
     data () {
       return {
@@ -79,7 +79,7 @@
             income: 832.3
           }
         ]
-      }
+      };
     }
-  }
+  };
 </script>
