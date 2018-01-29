@@ -1,17 +1,28 @@
 <template>
   <v-flex xs12 sm6 offset-sm3>
-    <v-data-table
-      v-bind:headers="headers"
-      :items="statistic"
-      hide-actions
-      class="elevation-1"
-    >
-      <template slot="items" scope="props">
-        <td class="text-xs-right">{{ props.item.month }}</td>
-        <td class="text-xs-right">{{ props.item.tasks }}</td>
-        <td class="text-xs-right">{{ props.item.income.toFixed(2) }}</td>
-      </template>
-    </v-data-table>
+    <div v-for="year in statistic">
+      {{year.year}}
+      <v-expansion-panel expand>
+        <v-expansion-panel-content v-for="(month, i) in year.months" :key="i">
+          <div slot="header">{{month.monthTranslated}} - <strong>{{month.tasks.length}}</strong></div>
+          <v-card>
+            <v-card-text class="grey lighten-3">
+              <v-data-table
+                  v-bind:headers="tasksHeaders"
+                  :items="month.tasks"
+                  hide-actions
+                  class="elevation-1"
+                >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.title }}</td>
+                  <td class="text-xs-right">{{ props.item.price }}</td>
+                </template>
+              </v-data-table>
+            </v-card-text>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </div>
   </v-flex>
 </template>
 
@@ -26,20 +37,32 @@
         'getTasks'
       ]),
       statistic () {
-        let data = [];
+        let data = [{
+          year: 2017,
+          months: []
+        }, {
+          year: 2018,
+          months: []
+        }];
 
-        for (let i = 0; i < 12; i++) {
-          data.push({
-            month: moment().month(i).format('MMMM'),
-            income: 0,
-            tasks: 0
-          });
-        }
+        _.each(data, function (item) {
+          for (let i = 1; i <= 12; i++) {
+            item.months.push({
+              month: i,
+              monthTranslated: moment().month(i - 1).format('MMMM'),
+              tasks: []
+            });
+          }
+        });
 
         _.each(this.getTasks, function (item) {
+          let year = parseInt(moment(item.start).format('YYYY'));
           let month = parseInt(moment(item.start).format('M'));
-          data[month].income += item.price;
-          data[month].tasks++;
+          let yearObj = _.findWhere(data, {year: year});
+          let monthObj = _.findWhere(yearObj.months, {month: month});
+          // console.log('year', year, 'month', month, item, yearObj, monthObj);
+          monthObj.tasks.push(item);
+          // TODO: accumulated tasks []
         });
 
         return data;
@@ -50,33 +73,15 @@
     },
     data () {
       return {
-        headers: [
+        tasksHeaders: [
           {
-            text: 'Month',
-            value: 'month',
-            sortable: false
-          },
-          {
-            text: 'Tasks',
-            value: 'tasks',
+            text: 'Title',
+            align: 'left',
             sortable: false
           },
           {
             text: 'Income',
-            value: 'income',
             sortable: false
-          }
-        ],
-        data: [
-          {
-            month: 'January',
-            tasks: 4,
-            income: 432.32
-          },
-          {
-            month: 'February',
-            tasks: 6,
-            income: 832.3
           }
         ]
       };
