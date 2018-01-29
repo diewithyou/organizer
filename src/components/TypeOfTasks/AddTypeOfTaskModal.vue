@@ -3,21 +3,24 @@
     <v-form v-model="valid" slot="body">
       <v-text-field
         label="Name"
+        :rules="nameRules"
         v-model="name">
       </v-text-field>
       <v-text-field
         label="Time"
+        :rules="timeRules"
         v-model="time">
       </v-text-field>
       <v-text-field
         label="Price"
+        :rules="priceRules"
         v-model="price">
       </v-text-field>
     </v-form>
     <v-card-actions slot="v-card-actions">
       <v-spacer></v-spacer>
       <v-btn class="blue--text darken-1" flat @click.native="hideDialog">Close</v-btn>
-      <v-btn class="blue--text darken-1" flat @click.native="addTypeOfTask">Add</v-btn>
+      <v-btn class="blue--text darken-1" flat :disabled="!valid" @click.native="addTypeOfTask">Add</v-btn>
     </v-card-actions>
   </Modal>
 </template>
@@ -34,8 +37,17 @@
       return {
         valid: false,
         name: '',
+        nameRules: [
+          (v) => !!v && v.length <= 50 || 'Enter the correct name'
+        ],
         time: '',
-        price: ''
+        timeRules: [
+          (v) => !isNaN(v) && v > 0 && v < 480 || 'This is not a number'
+        ],
+        price: '',
+        priceRules: [
+          (v) => !isNaN(v) && v > 0 && v < 1000 || 'Enter the correct price'
+        ]
       };
     },
     methods: {
