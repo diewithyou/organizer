@@ -17,6 +17,8 @@ export default {
   ],
   mutations,
   getters: {
-    getTypeOfTasks: state => state
+    getTypeOfTasks: state => state,
+    getTypeById: state => id => state.find(type => type.id === id),
+    getDuration: state => id => state.find(type => type.id === id).time
   }
 };
