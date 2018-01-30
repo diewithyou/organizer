@@ -1,5 +1,6 @@
 <template>
   <v-flex xs12 sm6 offset-sm3>
+    <FinancialItemDetailsModal :currentItems="detailedItems"></FinancialItemDetailsModal>
     <div v-for="year in statistic">
       <h5>{{year.year}}</h5>
 
@@ -8,11 +9,11 @@
           <div slot="header">{{month.monthTranslated}} -
             <strong>{{month.tasks.length}}</strong>
           </div>
-          <v-card>
+          <v-card v-if="month.tasks.length">
             <v-card-text class="grey lighten-3">
               <v-data-table v-bind:headers="tasksHeaders" :items="month.accumulatedTasks" hide-actions class="elevation-1">
                 <template slot="items" slot-scope="props">
-                  <tr v-if="props.item.count">
+                  <tr v-if="props.item.count" v-on:click="showItemDetails(year.year, month.month, props.item.categoryId)">
                     <td>{{ props.item.name }}</td>
                     <td class="text-xs-right">{{ props.item.count }}</td>
                     <td class="text-xs-right">{{ props.item.income }}</td>
@@ -31,8 +32,13 @@
 import { mapGetters } from 'vuex';
 import moment from 'moment';
 import _ from 'underscore';
+import FinancialItemDetailsModal from './FinancialItemDetailsModal';
+import {OPEN_DIALOG} from '../../store/mutation-types';
 
 export default {
+  components: {
+    FinancialItemDetailsModal
+  },
   methods:{
     prepareEmptyCategories: function() {
       var emptyCategories = _.map(this.getTypeOfTasks, function(task) {
@@ -52,6 +58,40 @@ export default {
       });
 
       return emptyCategories;
+    },
+    getItemsDetails: function(year, month, categoryId) {
+      console.log(year, month, categoryId);
+      var items = _.chain(this.statistic)
+        .filter(function(yearGroup){
+          return yearGroup.year === year;
+        })
+        .first()
+        .pick('months')
+        .compact()
+        .first()
+        .filter(function(monthGroup){
+          return monthGroup.month === month;
+        })
+        .first()
+        .pick('tasks')
+        .compact()
+        .first()
+        .filter(function(task) {
+          if(categoryId === 'other') {
+            return task.categoryId.length > 1;
+          } else {
+            return task.categoryId.length === 1 && task.categoryId[0] === categoryId;
+          }
+        })
+        .value();
+
+        return items;
+    },
+    showItemDetails: function(year, month, categoryId) {
+      this.detailedItems = this.getItemsDetails(year, month, categoryId);
+      setTimeout(function () {
+        this.$store.commit(OPEN_DIALOG);
+      }.bind(this));
     }
   },
   computed: {
@@ -112,6 +152,7 @@ export default {
   },
   data() {
     return {
+      detailedItems: null,
       tasksHeaders: [
         {
           text: 'Title',

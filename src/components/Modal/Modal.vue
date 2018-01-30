@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" scrollable>
+  <v-dialog v-model="dialog" scrollable :width="width">
     <!--<v-btn primary dark slot="activator">Open Dialog</v-btn>-->
     <v-card>
       <v-card-title>
@@ -20,7 +20,7 @@
   import {OPEN_DIALOG, CLOSE_DIALOG} from '../../store/mutation-types';
 
   export default {
-    props: ['title'],
+    props: ['title', 'width'],
     computed: {
       ...mapGetters([
         'getDialog'
