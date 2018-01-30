@@ -4,7 +4,7 @@
       <template slot="items" slot-scope="props">
         <tr>
           <td>{{ props.item.title }}</td>
-          <td class="text-xs-right">{{ props.item.start }}</td>
+          <td class="text-xs-right">{{ props.item.formattedDate }}</td>
           <td class="text-xs-right">{{ props.item.price }}</td>
         </tr>
       </template>

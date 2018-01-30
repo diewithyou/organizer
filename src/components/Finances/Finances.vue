@@ -60,7 +60,6 @@ export default {
       return emptyCategories;
     },
     getItemsDetails: function(year, month, categoryId) {
-      console.log(year, month, categoryId);
       var items = _.chain(this.statistic)
         .filter(function(yearGroup){
           return yearGroup.year === year;
@@ -82,6 +81,10 @@ export default {
           } else {
             return task.categoryId.length === 1 && task.categoryId[0] === categoryId;
           }
+        })
+        .map(function(item){
+          item.formattedDate = moment(item.start).format('DD-MM-YYYY H:mm');
+          return item;
         })
         .value();
 
@@ -152,7 +155,7 @@ export default {
   },
   data() {
     return {
-      detailedItems: null,
+      detailedItems: [],
       tasksHeaders: [
         {
           text: 'Title',
