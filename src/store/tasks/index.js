@@ -1,4 +1,5 @@
 import mutations from './mutations';
+import actions from './actions';
 
 export default {
   state: {
@@ -37,28 +38,16 @@ export default {
         title: 'Makijasz',
         start: '2017-10-30T19:00:00',
         price: 76
-      },
-      {
-        id: 999,
-        categoryId: [2],
-        title: 'Long Event',
-        start: '2017-10-30T08:35:00',
-        price: 40
-      },
-      {
-        id: 995,
-        categoryId: [2],
-        title: 'Repeating Event',
-        start: '2017-10-30T16:00:00',
-        price: 30.3
       }
     ],
-    nextId: 1,
+    nextId: 6,
     newTask: {}
   },
   mutations,
+  actions,
   getters: {
     getNewTask: state => state.newTask,
-    getTasks: state => state.tasks
+    getTasks: state => state.tasks,
+    getTask: state => id => state.tasks.find(task => task.id === id)
   }
 };

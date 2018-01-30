@@ -15,7 +15,7 @@
     <v-card-actions slot="v-card-actions">
       <v-spacer></v-spacer>
       <v-btn class="blue--text darken-1" flat @click.native="closeDialog">Close</v-btn>
-      <v-btn class="blue--text darken-1" flat @click.native="addTask">Add</v-btn>
+      <v-btn class="blue--text darken-1" flat @click.native="updateTask">Add</v-btn>
     </v-card-actions>
   </Modal>
 </template>
@@ -29,10 +29,11 @@
     components: {
       Modal
     },
+    props: ['task'],
     computed: {
       ...mapGetters([
         'getTypeOfTasks',
-        'getNewTask'
+        'getTask',
       ]),
       typeOfTask () {
         return this.getTypeOfTasks.map(p => ({
@@ -42,24 +43,33 @@
       }
     },
     mounted () {
-      console.log('getNewTask', this.getNewTask);
+      // console.log('getNewTask', this.getNewTask);
+      // this.task = this.getTask(this.getEditedTask);
+      // console.log('this task', this.task)
     },
     data () {
       return {
+        // task: {},
         valid: false,
         types: [],
         title: 'New task',
       };
     },
+    watch: {
+      task (value) {
+        this.types = value.categoryId || [];
+        this.title = value.title;
+      }
+    },
     methods: {
-      addTask () {
+      updateTask () {
         const newTask = {
+          ...this.task,
           title: this.title,
-          start: this.getNewTask.start,
           categoryId: this.types,
           price: 50 // temporary
         };
-        this.$emit('addNewTask', newTask);
+        this.$emit('saveTask', newTask);
         this.closeDialog();
       },
       closeDialog () {

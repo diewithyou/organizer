@@ -11,9 +11,10 @@ export default {
     state.drawer = false;
   },
 
-  [types.OPEN_DIALOG] (state) {
+  [types.OPEN_DIALOG] (state, editedTask) {
     console.log('OPEN_DIALOG');
     state.dialog = true;
+    state.editedTask = editedTask;
   },
 
   [types.CLOSE_DIALOG] (state) {
