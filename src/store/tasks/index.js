@@ -12,6 +12,13 @@ export default {
         price: 80
       },
       {
+        id: 8,
+        categoryId: [1],
+        title: 'Makijas taki drugi ',
+        start: '2017-01-25T20:00:00',
+        price: 60
+      },
+      {
         id: 2,
         categoryId: [1, 2],
         title: 'Makijasz 2 elo',
