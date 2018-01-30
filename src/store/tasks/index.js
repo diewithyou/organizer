@@ -12,6 +12,7 @@ export default {
         price: 80
       },
       {
+        id: 8,
         categoryId: [1],
         title: 'Makijas taki drugi ',
         start: '2017-01-25T20:00:00',
