@@ -7,6 +7,7 @@
       :editable="true"
       @event-created="onEventCreated"
       @event-drop="onEventDrop"
+      @event-selected="onEventSelected"
       :events="getTasks"
     ></full-calendar>
   </div>
@@ -58,12 +59,22 @@
 
       onEventDrop (event) {
         // console.log('oneventdrop', event);
-        this.$store.commit(UPDATE_TASK, {
+        this.$store.commit(UPDATE_TASK, this.getTaskFromEvent(event));
+      },
+
+      onEventSelected (event) {
+        this.editedTask = this.getTaskFromEvent(event);
+        this.$store.dispatch(OPEN_DIALOG_EDIT_TASK);
+      },
+
+      getTaskFromEvent(event) {
+        return {
           start: event.start.format(),
           end: event.end && event.end.format(),
           id: event.id,
-          title: event.title
-        });
+          title: event.title,
+          categoryId: event.categoryId
+        }
       }
     }
   };

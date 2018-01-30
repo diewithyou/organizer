@@ -55,6 +55,12 @@
         title: 'New task',
       };
     },
+    watch: {
+      task (value) {
+        this.types = value.categoryId || [];
+        this.title = value.title;
+      }
+    },
     methods: {
       updateTask () {
         const newTask = {
