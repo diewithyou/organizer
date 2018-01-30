@@ -61,6 +61,7 @@
       task (value) {
         this.types = value.categoryId || [];
         this.title = value.title;
+        this.customizedTitle = value.customizedTitle;
       },
       types (value) {
         if (!this.customizedTitle) {
