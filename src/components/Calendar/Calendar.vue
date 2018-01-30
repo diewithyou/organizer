@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="calendar"></div>
-    <AddTaskModal @addNewTask="addNewTask" :taskId="taskId"></AddTaskModal>
+    <EditTaskModal @saveTask="saveTask" :task="editedTask"></EditTaskModal>
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Dupka</v-btn>
     <full-calendar
       :editable="true"
@@ -18,23 +18,24 @@
   // import {ADD_NEW_TASK, OPEN_DIALOG} from '../../store/mutation-types';
   // import {fullcalendar} from 'fullcalendar';
   import {FullCalendar} from 'vue-full-calendar';
-  import AddTaskModal from './AddTaskModal';
-  import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK, CREATE_NEW_TASK} from '../../store/mutation-types';
+  import EditTaskModal from './EditTaskModal';
+  import {OPEN_DIALOG, ADD_NEW_TASK, UPDATE_TASK} from '../../store/mutation-types';
+  import {CREATE_TASK, OPEN_DIALOG_EDIT_TASK} from '../../store/action-types';
 
   export default {
-    data () {
-      return {
-        taskId: null
-      }
-    },
     components: {
       FullCalendar,
-      AddTaskModal
+      EditTaskModal
     },
     computed: {
       ...mapGetters([
         'getTasks'
       ])
+    },
+    data() {
+      return {
+        editedTask: null 
+      }
     },
     mounted () {
     },
@@ -42,27 +43,24 @@
       show () {
         this.$store.commit(OPEN_DIALOG);
       },
-      addNewTask (newTask) {
-        this.$store.commit(ADD_NEW_TASK, newTask);
-        // this.cal.fullCalendar('renderEvent', newTask);
+      saveTask (task) {
+        if (task.id) {
+          this.$store.commit(UPDATE_TASK, task);
+        } else {
+          this.$store.commit(ADD_NEW_TASK, task);
+        }
       },
+
       onEventCreated (event) {
-        // this.$store.commit(OPEN_DIALOG);
-        //   start: event.start.format(),
-        //   end: event.end.format()
-        // });
-        this.$store.commit(CREATE_NEW_TASK, {start: event.start.format()});
-        // this.$store.commit(OPEN_DIALOG);
-        setTimeout(() => {
-          this.$store.commit(OPEN_DIALOG);
-        }, 1);
+        this.editedTask = {start: event.start.format()};
+        this.$store.dispatch(OPEN_DIALOG_EDIT_TASK)
       },
 
       onEventDrop (event) {
         // console.log('oneventdrop', event);
         this.$store.commit(UPDATE_TASK, {
           start: event.start.format(),
-          end: event.end.format(),
+          end: event.end && event.end.format(),
           id: event.id,
           title: event.title
         });
