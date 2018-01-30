@@ -4,7 +4,7 @@
     <EditTaskModal @saveTask="saveTask" :task="editedTask"></EditTaskModal>
     <v-btn class="blue--text darken-1" flat @mousedown.native="show">Dupka</v-btn>
     <full-calendar
-      :editable="true"
+      :config="config"
       @event-created="onEventCreated"
       @event-drop="onEventDrop"
       @event-selected="onEventSelected"
@@ -15,6 +15,7 @@
 
 <script>
   // import jQuery from 'jquery'
+  import moment from 'moment';
   import {mapGetters} from 'vuex';
   // import {ADD_NEW_TASK, OPEN_DIALOG} from '../../store/mutation-types';
   // import {fullcalendar} from 'fullcalendar';
@@ -30,12 +31,17 @@
     },
     computed: {
       ...mapGetters([
-        'getTasks'
+        'getTasks',
+        'getDuration'
       ])
     },
     data() {
       return {
-        editedTask: null 
+        editedTask: null,
+        config: {
+          timezone: 'local',
+          eventDurationEditable: false
+        }
       }
     },
     mounted () {
@@ -45,6 +51,7 @@
         this.$store.commit(OPEN_DIALOG);
       },
       saveTask (task) {
+        task.end = moment(task.start).add(this.getTaskDuration(task), 'minutes').format()
         if (task.id) {
           this.$store.commit(UPDATE_TASK, task);
         } else {
@@ -70,13 +77,21 @@
       getTaskFromEvent(event) {
         return {
           start: event.start.format(),
-          end: event.end && event.end.format(),
+          end: event.start.clone().add(this.getTaskDuration(event), 'minutes').format(), 
           id: event.id,
           title: event.title,
           categoryId: event.categoryId
         }
+      },
+
+      getTaskDuration(event) {
+        return event.categoryId
+          .map(this.getDuration)
+          .reduce((a, b) => a + b, 0)
+          ;
       }
     }
+    
   };
 </script>
 
