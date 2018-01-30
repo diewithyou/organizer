@@ -80,7 +80,8 @@
           end: event.start.clone().add(this.getTaskDuration(event), 'minutes').format(), 
           id: event.id,
           title: event.title,
-          categoryId: event.categoryId
+          categoryId: event.categoryId,
+          customizedTitle: event.customizedTitle
         }
       },
 

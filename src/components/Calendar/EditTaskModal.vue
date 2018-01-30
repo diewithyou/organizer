@@ -1,7 +1,7 @@
 <template>
   <Modal title="Add Task">
     <v-form v-model="valid" slot="body">
-      <v-text-field v-model="title"></v-text-field>
+      <v-text-field v-model="title" @input="setCustomizedTitle"></v-text-field>
       <v-select
         label="Select"
         v-bind:items="typeOfTask"
@@ -33,6 +33,7 @@
     computed: {
       ...mapGetters([
         'getTypeOfTasks',
+        'getTypeById',
         'getTask',
       ]),
       typeOfTask () {
@@ -53,12 +54,18 @@
         valid: false,
         types: [],
         title: 'New task',
+        customizedTitle: false
       };
     },
     watch: {
       task (value) {
         this.types = value.categoryId || [];
         this.title = value.title;
+      },
+      types (value) {
+        if (!this.customizedTitle) {
+          this.title = this.getDefaultTaskName(value)
+        }
       }
     },
     methods: {
@@ -67,6 +74,7 @@
           ...this.task,
           title: this.title,
           categoryId: this.types,
+          customizedTitle: this.customizedTitle,
           price: 50 // temporary
         };
         this.$emit('saveTask', newTask);
@@ -74,6 +82,16 @@
       },
       closeDialog () {
         this.$store.commit(CLOSE_DIALOG);
+      },
+      getDefaultTaskName () {
+        return this.types
+          .map(this.getTypeById)
+          .map(type => type.name)
+          .join(' + ')
+        ;
+      },
+      setCustomizedTitle () {
+        this.customizedTitle = true;
       }
     }
   };
