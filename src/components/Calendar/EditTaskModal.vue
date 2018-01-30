@@ -1,7 +1,7 @@
 <template>
   <Modal title="Add Task">
     <v-form v-model="valid" slot="body">
-      <v-text-field v-model="title" @input="setCustomizedTitle"></v-text-field>
+      <v-text-field v-model="title" @input="customizedTitle = true"></v-text-field>
       <v-select
         label="Select"
         v-bind:items="typeOfTask"
@@ -11,6 +11,7 @@
         hint="Zaznacz opcje"
         persistent-hint
       ></v-select>
+      <v-text-field v-model="time" @input="customizedTime = true" label="Minuty" />
     </v-form>
     <v-card-actions slot="v-card-actions">
       <v-spacer></v-spacer>
@@ -54,7 +55,9 @@
         valid: false,
         types: [],
         title: 'New task',
-        customizedTitle: false
+        time: 0,
+        customizedTitle: false,
+        customizedTime: false
       };
     },
     watch: {
@@ -65,9 +68,13 @@
       },
       types (value) {
         if (!this.customizedTitle) {
-          this.title = this.getDefaultTaskName(value)
+          this.title = this.getDefaultTaskName(value);
         }
-      }
+        if (!this.customizedTime) {
+           this.time = this.getDefaultTaskDuration(value);
+         }
+      },
+    
     },
     methods: {
       updateTask () {
@@ -75,7 +82,10 @@
           ...this.task,
           title: this.title,
           categoryId: this.types,
+          time: this.time,
           customizedTitle: this.customizedTitle,
+          customizedTime: this.customizedTime,
+          // ...this.data,
           price: 50 // temporary
         };
         this.$emit('saveTask', newTask);
@@ -90,6 +100,12 @@
           .map(type => type.name)
           .join(' + ')
         ;
+      },
+      getDefaultTaskDuration () {
+        return this.types
+          .map(this.getTypeById)
+          .map(type => type.time)
+          .reduce((a, b) => a + b, 0);
       },
       setCustomizedTitle () {
         this.customizedTitle = true;

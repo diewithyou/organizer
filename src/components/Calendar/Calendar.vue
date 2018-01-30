@@ -51,7 +51,7 @@
         this.$store.commit(OPEN_DIALOG);
       },
       saveTask (task) {
-        task.end = moment(task.start).add(this.getTaskDuration(task), 'minutes').format()
+        task.end = moment(task.start).add(task.time, 'minutes').format();
         if (task.id) {
           this.$store.commit(UPDATE_TASK, task);
         } else {
@@ -77,20 +77,15 @@
       getTaskFromEvent(event) {
         return {
           start: event.start.format(),
-          end: event.start.clone().add(this.getTaskDuration(event), 'minutes').format(), 
+          end: event.start.clone().add(event.time, 'minutes').format(), 
           id: event.id,
           title: event.title,
           categoryId: event.categoryId,
-          customizedTitle: event.customizedTitle
+          customizedTitle: event.customizedTitle,
+          time: event.time,
+          customizedTime: event.customizedTime
         }
       },
-
-      getTaskDuration(event) {
-        return event.categoryId
-          .map(this.getDuration)
-          .reduce((a, b) => a + b, 0)
-          ;
-      }
     }
     
   };
