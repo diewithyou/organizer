@@ -56,7 +56,8 @@
         const newTask = {
           title: this.title,
           start: this.getNewTask.start,
-          categoryId: this.types
+          categoryId: this.types,
+          price: 50 // temporary
         };
         this.$emit('addNewTask', newTask);
         this.closeDialog();

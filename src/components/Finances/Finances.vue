@@ -12,7 +12,7 @@
             <v-card-text class="grey lighten-3">
               <v-data-table v-bind:headers="tasksHeaders" :items="month.accumulatedTasks" hide-actions class="elevation-1">
                 <template slot="items" slot-scope="props">
-                  <tr  v-if="props.item.count">
+                  <tr v-if="props.item.count">
                     <td>{{ props.item.name }}</td>
                     <td class="text-xs-right">{{ props.item.count }}</td>
                     <td class="text-xs-right">{{ props.item.income }}</td>
@@ -34,7 +34,7 @@ import _ from 'underscore';
 
 export default {
   methods:{
-    getEmptyCategories: function() {
+    prepareEmptyCategories: function() {
       var emptyCategories = _.map(this.getTypeOfTasks, function(task) {
         return {
             categoryId: task.id,
@@ -74,7 +74,7 @@ export default {
             month: i,
             monthTranslated: moment().month(i - 1).format('MMMM'),
             tasks: [],
-            accumulatedTasks: this.getEmptyCategories()
+            accumulatedTasks: this.prepareEmptyCategories()
           });
         }
       });
@@ -90,10 +90,9 @@ export default {
 
       _.each(data, function(year) {
         _.each(year.months, function(month) {
-          var accumulatedTasks = month.accumulatedTasks;
+          let accumulatedTasks = month.accumulatedTasks;
           _.each(month.tasks, function(task) {
             let taskCategories = task.categoryId;
-
             if(taskCategories.length === 1) {
               _.findWhere(accumulatedTasks, {categoryId: taskCategories[0]}).income += task.price;
               _.findWhere(accumulatedTasks, {categoryId: taskCategories[0]}).count++;
